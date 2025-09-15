@@ -1,2 +1,4 @@
 # Practica Formativa
-Participantes: Ferrari, Arias, Godoy
+
+Participantes: Arias Diego, Godoy Sergio y Ferrari Agustin
+
