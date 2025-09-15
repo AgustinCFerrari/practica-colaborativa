@@ -1,5 +1,32 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>App</title></head>
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Perfil - UI</title></head>
 <body>
-  <h1>Página de inicio</h1>
-  <p>Contenido inicial.</p>
+  <h1>Perfil: Alta de usuario</h1>
+
+  <form id="perfilForm">
+    <label>Usuario: <input type="text" name="username" required placeholder="tu usuario"></label><br>
+    <label>Contraseña: <input type="password" name="password" required placeholder="••••••"></label><br>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <pre id="respuesta"></pre>
+
+  <script>
+    // Llamada AJAX (fetch) al backend
+    document.getElementById('perfilForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      const res = await fetch('api/alta_perfil.php', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(data)
+      });
+      const json = await res.json().catch(() => ({ok:false, error:'Respuesta no JSON'}));
+      document.getElementById('respuesta').textContent = JSON.stringify(json, null, 2);
+    });
+  </script>
+
+  <!-- Documentación:
+       POST api/alta_perfil.php
+       Body JSON: { "username": "string(3-30)", "password": "string(>=6)" }
+       Respuesta: { "ok": true } o { "ok": false, "error": "motivo" } -->
 </body></html>
